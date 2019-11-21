@@ -1,46 +1,51 @@
 require './lib/games'
 require './lib/event'
 
-def start
-  puts "Welcome to the Super Sports Games!"
-  puts "Please enter the year for the current games:"
-  print "> "
-  year = gets.chomp
+puts "Welcome to the Super Sports Games!"
+puts "Please enter the year for the current games:"
+print "> "
+year = gets.chomp
+games = Games.new(year)
 
-  puts "Please enter the first event of this year's games:"
+def start
+  puts "What would you like to do?"
+  puts "Enter 'A' to add an event."
+  puts "Enter 'S' to get a summary of the events."
+  puts "Enter 'Q' to quit."
+  print "> "
+  answer = gets.chomp.downcase
+
+  until answer == "a" || answer == "s" || answer == "q"
+    valid_input
+    answer = gets.chomp.downcase
+    if answer == "a"
+      add_event
+    else answer == "q"
+      break
+    else answer == "s"
+      summary
+    end
+  end
+
+
+end
+
+def add_event
+  ages = []
+  puts "Please enter the event: "
   print "> "
   event = gets.chomp
-
-  additional_games
-
-  puts "Please enter the ages of this year's competitors:"
-  print "> "
-  ages = gets.chomp
+  ages << event
 end
 
-def additional_games
-  puts "Would you like to add any additional games? Enter Y or N:"
+def valid_input
+  puts "Please enter a valid input"
   print "> "
-  answer = gets.chomp
-
-  until answer.upcase == "Y" || answer.upcase == "N"
-    puts "Please enter valid input: "
-    print "> "
-    answer = gets.chomp
-  end
-
-  if answer.upcase == "Y"
-    puts "Please enter the next event: "
-    print "> "
-    new_event = gets.chomp
-  end
-
-  until answer.upcase == "N"
-    answer = gets.chomp
-  end
 end
+
+def summary
+
 
 start
 
 events = Event.new(event, ages)
-games = Games.new(year)
